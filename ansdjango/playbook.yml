@@ -1,0 +1,19 @@
+---
+- name: Installation
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: Create file
+      copy:
+        content: Create \n
+        dest: /tmp/test.txt
+
+    - name: Install dependancies
+      apt: name={{ item }} state=installed
+        with_items:
+            - python-setuptools
+            - python-dev
+            - build-essential
+            - python-pip
+

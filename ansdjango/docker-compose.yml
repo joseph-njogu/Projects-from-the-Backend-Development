@@ -1,0 +1,48 @@
+# # version of the docker compose
+# version: '3.6'
+
+# #We can have many services for example db
+# services:
+#   web:
+#     #build the current directory
+#     build: .
+#     command: python3 /code/manage.py runserver 0.0.0.0:8000 
+#     volumes:
+#       - .:/code
+#     ports:
+#       - 8000:8000
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: dockerapp
+  labels:
+    name: dockerapp
+spec:
+  replicas: 3
+  selector:
+    name: dockerapp
+    spec:
+      containers:
+        - name: app
+          image: njogu487/helloworld:v2
+          # env:
+          #   - name: MY_POD_NAME
+          #     valueFrom:
+          #       fieldRef:
+          #         fieldPath: metadata.name
+          #   - name: MY_POD_NAMESPACE
+          #     valueFrom:
+          #       fieldRef:
+          #         fieldPath: metadata.namespace
+          #   - name: MY_POD_IP
+          #     valueFrom:
+          #       fieldRef:
+          #         fieldPath: status.podIP
+            # - name: DATABASE_NAME
+            #   value: app_db
+            # - name: DATABASE_USER
+            #   value: app_db_user
+            # - name: DATABASE_PASSWORD
+            #   value: app_db_pw
+          ports:
+            - containerPort: 8000
