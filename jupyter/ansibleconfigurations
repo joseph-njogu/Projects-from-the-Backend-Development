@@ -1,0 +1,24 @@
+---
+- name: Installation
+  hosts: 192.168.100.57
+  remote_user: blackmaster
+  become: yes
+  tasks:
+    - name: Create file
+      copy:
+        content: Create \n
+        dest: /tmp/test.txt
+
+    - name: Install dependancies
+      apt: name={{ item }} state=installed
+      with_items:
+        - python-setuptools
+        - python-dev
+        - build-essential
+        - python-pip
+
+[ubuntuserver]
+192.168.100.57 ansible_user=blackmaster
+
+[all:vars]
+ansible_ssh_private_key_file= ~/.ssh/id_rsa
